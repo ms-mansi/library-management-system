@@ -1,0 +1,83 @@
+CREATE DATABASE LibraryDB;
+USE LibraryDB;
+
+CREATE TABLE ContactUs (
+    ContactID INT PRIMARY KEY IDENTITY(1,1) ,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Message TEXT
+);
+
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY IDENTITY(1,1),
+    Username NVARCHAR(50) NOT NULL,
+    Password VARCHAR(50) NOT NULL,
+    Role NVARCHAR(20) NOT NULL,
+    Email NVARCHAR(100) NOT NULL,
+    CONSTRAINT UQ_Username UNIQUE (Username)
+);
+
+CREATE TABLE Students (
+    StudentID NVARCHAR(50) PRIMARY KEY IDENTITY(1,1),
+    StudentName NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Publications (
+    PublicationID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100) NOT NULL,
+    Year INT NOT NULL
+);
+
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY IDENTITY(1,1), 
+    Title NVARCHAR(255) NOT NULL,
+    Author NVARCHAR(255) NOT NULL,
+    PublicationID INT FOREIGN KEY REFERENCES Publications(PublicationID),
+    Quantity INT NOT NULL
+);
+
+CREATE TABLE IssuedBooks (
+    IssueID INT PRIMARY KEY IDENTITY(1,1),
+    BookID INT FOREIGN KEY REFERENCES Books(BookID),
+    Title NVARCHAR(255) NOT NULL,
+    StudentID NVARCHAR(50) FOREIGN KEY REFERENCES Students(StudentID),
+    StudentName NVARCHAR(255) NOT NULL,
+    IssueDate DATE NOT NULL,
+    DueDate DATE NOT NULL
+);
+
+CREATE TABLE ReturnBook (
+    ReturnBookID INT PRIMARY KEY IDENTITY(1,1),
+    BookID INT FOREIGN KEY REFERENCES Books(BookID),
+    Title NVARCHAR(255) NOT NULL,
+    StudentID NVARCHAR(50) FOREIGN KEY REFERENCES Students(StudentID),
+    StudentName NVARCHAR(255) NOT NULL,
+    DueDate DATE NOT NULL,
+    ReturnDate DATE NOT NULL
+);
+
+CREATE TABLE PenaltyRecords (
+    PenaltyID INT PRIMARY KEY IDENTITY(1,1),
+    BookID INT FOREIGN KEY REFERENCES Books(BookID),
+    StudentID NVARCHAR(50) FOREIGN KEY REFERENCES Students(StudentID),
+    StudentName NVARCHAR(255) NOT NULL,
+    Title NVARCHAR(255) NOT NULL,
+    DueDate DATE NOT NULL,
+    ReturnDate DATE NOT NULL,
+    OverdueDays INT NOT NULL,
+    FineAmount DECIMAL(10, 2) NOT NULL
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
