@@ -32,5 +32,5 @@ To run locally:
 
 ---
 
-🎥 _You can also add a short demo video or screenshots here._
+
 
